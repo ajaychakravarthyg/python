@@ -1,0 +1,15 @@
+# Tells kube-prometheus-stack's Prometheus to scrape /metrics on this service.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: devops-demo-api
+  labels:
+    release: kube-prometheus-stack   # must match the Helm release label selector
+spec:
+  selector:
+    matchLabels:
+      app: devops-demo-api
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s

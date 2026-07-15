@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: demo
+resources:
+  - ../../base
+# CI runs `kustomize edit set image` which writes the block below:
+images:
+  - name: devops-demo-api
+    newName: 000000000000.dkr.ecr.ap-south-1.amazonaws.com/devops-demo-api
+    newTag: replace-me

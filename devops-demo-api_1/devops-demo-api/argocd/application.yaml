@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: devops-demo-api
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://gitlab.com/<you>/devops-demo-gitops.git  # the GitOps repo
+    targetRevision: main
+    path: overlays/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+  syncPolicy:
+    automated:
+      prune: true        # delete resources removed from git
+      selfHeal: true     # revert manual drift back to git state
+    syncOptions:
+      - CreateNamespace=true
